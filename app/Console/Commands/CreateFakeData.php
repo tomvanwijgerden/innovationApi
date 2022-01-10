@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\AbsenceCourse;
 use App\Models\Employee;
 use App\Models\Employer;
+use Carbon\Carbon;
 use Faker\Factory;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -68,7 +69,7 @@ class CreateFakeData extends Command
             $percentage = random_int(0,100);
             $absenceCourse = new AbsenceCourse();
             $absenceCourse->start_at = $faker->date;
-            $absenceCourse->end_at = $faker->date;
+            $absenceCourse->end_at = Carbon::parse($absenceCourse->start_at)->addDays(random_int(1,700));
             $absenceCourse->employee_id = $employeeId;
             $absenceCourse->absence_percentage = $percentage;
             $absenceCourse->type_id = $percentage == 0 ? 2 : 1;
