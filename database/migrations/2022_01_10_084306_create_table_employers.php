@@ -13,9 +13,10 @@ class CreateTableEmployers extends Migration
      */
     public function up()
     {
-        Schema::create('table_employers', function (Blueprint $table) {
+        Schema::create('employers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('street');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateTableEmployers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_employers');
+        Schema::dropIfExists('employers');
     }
 }
