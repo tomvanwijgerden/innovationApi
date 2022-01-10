@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\AbsenceCourse;
+use App\Models\Dossier;
 use App\Models\Employee;
 use App\Models\Employer;
 use Carbon\Carbon;
@@ -57,20 +58,46 @@ class CreateFakeData extends Command
             $employee->employer_id = $id;
             $employee->save();
 
-            $this->createAbsenceCourses($employee->id);
+            $this->createDossiers($employee->id);
 
         }
     }
 
-    private function createAbsenceCourses($employeeId){
+    private function createDossiers($employeeId){
+        $amount = random_int(1,10);
+        for ($i = 0; $i < $amount; $i++){
+            $faker = Factory::create();
+            $dossier = new Dossier();
+            $dossier->start_at = $faker->date;
+            $dossier->end_at = null;
+            $dossier->employee_id = $employeeId;
+            $dossier->dossier_status_id = 1;
+            $dossier->save();
+
+            $this->createAbsenceCourses($employeeId, $dossier, $faker->date);
+
+            $lastAbsenceCourse = AbsenceCourse::where('dossier_id','=', $dossier->id)
+                                ->orderByDesc('start_at')
+                                ->first();
+
+            if($lastAbsenceCourse->absence_percentage == 100){
+                $dossier->dossier_status_id = 2;
+                $dossier->end_at = $lastAbsenceCourse->start_at;
+                $dossier->save();
+            }
+
+        }
+    }
+
+    private function createAbsenceCourses($employeeId, $dossier, $date){
         $amount = random_int(1,10);
         for ($i = 0; $i < $amount; $i++){
             $faker = Factory::create();
             $percentage = random_int(0,100);
             $absenceCourse = new AbsenceCourse();
-            $absenceCourse->start_at = $faker->date;
+            $absenceCourse->start_at = $date;
             $absenceCourse->end_at = Carbon::parse($absenceCourse->start_at)->addDays(random_int(1,730));
-            $absenceCourse->employee_id = $employeeId;
+            $absenceCourse->dossier_id = $dossier->id;
             $absenceCourse->absence_percentage = $percentage;
             $absenceCourse->type_id = $percentage == 0 ? 2 : 1;
             $absenceCourse->save();

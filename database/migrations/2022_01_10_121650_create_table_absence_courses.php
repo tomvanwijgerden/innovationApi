@@ -17,7 +17,7 @@ class CreateTableAbsenceCourses extends Migration
             $table->id();
             $table->dateTime('start_at');
             $table->dateTime('end_at');
-            $table->integer('employee_id');
+            $table->integer('dossier_id');
             $table->decimal('absence_percentage');
             $table->integer('type_id');
             $table->timestamps();
