@@ -40,4 +40,14 @@ class Dossier extends Model
     {
         return $this->hasMany(AbsenceCourse::class);
     }
+
+    /**
+     * An absence course has an absence type.
+     *
+     * @return  HasOne
+     */
+    public function dossierStatus()
+    {
+        return $this->hasOne(DossierStatuses::class);
+    }
 }
