@@ -16,7 +16,7 @@ class CreateTableAbsenceCourses extends Migration
         Schema::create('absence_courses', function (Blueprint $table) {
             $table->id();
             $table->dateTime('start_at');
-            $table->dateTime('end_at');
+            $table->dateTime('end_at')->nullable();
             $table->integer('dossier_id');
             $table->decimal('absence_percentage');
             $table->integer('type_id');

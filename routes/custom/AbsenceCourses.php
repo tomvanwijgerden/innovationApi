@@ -14,7 +14,7 @@ Route::group(['prefix' => 'absence-courses', 'as' => 'absence-courses.'], functi
 
     Route::get('{absenceCourse}/show', [AbsenceCourseController::class, 'show'])->name('show');
 
-    Route::post('{absenceCourse}/store', [AbsenceCourseController::class, 'store'])->name('store');
+    Route::post('/store', [AbsenceCourseController::class, 'store'])->name('store');
 
     Route::post('{absenceCourse}/update', [AbsenceCourseController::class, 'update'])->name('update');
 

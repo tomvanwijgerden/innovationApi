@@ -45,7 +45,7 @@ class AbsenceCourseController extends Controller
      */
     public function store(Request $request)
     {
-        $absenceCourse = $this->dispatchSync(new storeAbsenceCourseJob($request));
+        $absenceCourse = $this->dispatchNow(new storeAbsenceCourseJob($request));
 
         return response()->json([
            'data' => $absenceCourse,

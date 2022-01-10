@@ -52,11 +52,26 @@ class StoreAbsenceCourseJob implements ShouldQueue
 
         $absenceCourse = new AbsenceCourse();
         $absenceCourse->start_at = Carbon::parse($request->input('start_at'));
-        $absenceCourse->end_at = Carbon::parse($request->input('end_at'));
         $absenceCourse->absence_percentage = $request->input('absence_percentage');
         $absenceCourse->dossier_id = $dossier->id;
         $absenceCourse->type_id = $request->input('type_id');
         $absenceCourse->save();
+
+        if($absenceCourse->absence_percentage == 0){
+            $dossier->end_at = $absenceCourse->start_at;
+            $dossier->dossier_status_id = 2;
+            $dossier->save();
+        }
+
+        $previousAbsenceCourse = AbsenceCourse::where('dossier_id','=', $dossier->id)
+                                  ->where('id','!=', $absenceCourse->id)
+                                  ->orderByDesc('start_at')
+                                  ->first();
+
+        if($previousAbsenceCourse){
+            $previousAbsenceCourse->end_at = $absenceCourse->start_at;
+            $previousAbsenceCourse->save();
+        }
 
         return $absenceCourse;
     }
