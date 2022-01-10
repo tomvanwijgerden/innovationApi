@@ -31,6 +31,7 @@ class CreateFakeData extends Command
         DB::connection('mysql')->table('employers')->truncate();
         DB::connection('mysql')->table('employees')->truncate();
         DB::connection('mysql')->table('absence_courses')->truncate();
+        DB::connection('mysql')->table('dossiers')->truncate();
         $this->createEmployers();
     }
 
