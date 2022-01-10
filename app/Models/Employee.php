@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 /**
@@ -26,4 +27,15 @@ class Employee extends Model
      * @var  string
      */
     protected $table = 'employees';
+
+    /**
+     * A employee belongs to a EmployerPerson.
+     *
+     * @return  HasMany
+     */
+    public function absenceCourses(): HasMany
+    {
+        return $this->hasMany(AbsenceCourse::class);
+    }
+
 }
