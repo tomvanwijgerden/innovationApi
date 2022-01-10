@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
@@ -14,14 +15,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @package  DotwebCloud\Entities\AbsenceCourses
  *
- * @property  int      $id
- * @property  Carbon   $start_at
- * @property  Carbon   $end_at
- * @property  Employee $dossier_id
- * @property  integer  $absence_percentage
- * @property  integer  $type_id
+ * @property  int     $id
+ * @property  integer $employee_id
+ * @property  integer $dossier_status_id
+ * @property  Carbon  $start_at
+ * @property  Carbon  $end_at
  */
-class AbsenceCourse extends Model
+class Dossier extends Model
 {
 
     /**
@@ -29,15 +29,15 @@ class AbsenceCourse extends Model
      *
      * @var  string
      */
-    protected $table = 'absence_courses';
+    protected $table = 'dossiers';
 
     /**
      * An absence course has an absence type.
      *
-     * @return  HasOne
+     * @return  HasMany
      */
-    public function absenceType()
+    public function absenceCourses()
     {
-        return $this->hasOne(AbsenceType::class);
+        return $this->hasMany(AbsenceCourse::class);
     }
 }

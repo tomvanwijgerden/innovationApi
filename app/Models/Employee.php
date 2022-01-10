@@ -33,9 +33,9 @@ class Employee extends Model
      *
      * @return  HasMany
      */
-    public function absenceCourses(): HasMany
+    public function dossiers(): HasMany
     {
-        return $this->hasMany(AbsenceCourse::class);
+        return $this->hasMany(Dossier::class);
     }
 
 }

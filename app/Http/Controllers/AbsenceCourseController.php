@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\storeAbsenceCourseJob;
 use App\Models\AbsenceCourse;
 use App\Models\Employee;
 use Carbon\Carbon;
@@ -44,13 +45,7 @@ class AbsenceCourseController extends Controller
      */
     public function store(Request $request)
     {
-        $absenceCourse = new AbsenceCourse();
-        $absenceCourse->start_at = Carbon::parse($request->input('start_at'));
-        $absenceCourse->end_at = Carbon::parse($request->input('end_at'));
-        $absenceCourse->absence_percentage = $request->input('absence_percentage');
-        $absenceCourse->employee_id = $request->input('employee_id');
-        $absenceCourse->type_id = $request->input('type_id');
-        $absenceCourse->save();
+        $absenceCourse = $this->dispatchSync(new storeAbsenceCourseJob($request));
 
         return response()->json([
            'data' => $absenceCourse,
@@ -70,7 +65,7 @@ class AbsenceCourseController extends Controller
         $absenceCourse->start_at = Carbon::parse($request->input('start_at'));
         $absenceCourse->end_at = Carbon::parse($request->input('end_at'));
         $absenceCourse->absence_percentage = $request->input('absence_percentage');
-        $absenceCourse->employee_id = $request->input('employee_id');
+        $absenceCourse->dossier_id = $request->input('dossierId');
         $absenceCourse->type_id = $request->input('type_id');
         $absenceCourse->save();
 
