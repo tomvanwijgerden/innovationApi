@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,9 +12,10 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package  DotwebCloud\Entities\AbsenceCourses
  *
- * @property  int    $id
- * @property  string $name
- * @property  string $street
+ * @property  int     $id
+ * @property  string  $name
+ * @property  Carbon  $date_of_birth
+ * @property  integer $employer_id
  */
 class Employee extends Model
 {
