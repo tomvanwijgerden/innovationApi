@@ -15,7 +15,8 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
-        $employees = Employee::all();
+        $employees = Employee::with(['absenceCourses'])
+                             ->get();
 
         return response()->json(['data' => $employees]);
     }
@@ -28,7 +29,11 @@ class EmployeeController extends Controller
      */
     public function show(Request $request, Employee $employee)
     {
-        return response()->json(['data' => $employee]);
+        $employeeData = Employee::with(['absenceCourses'])
+                                ->where('employees.id', '=', $employee->id)
+                                ->get();
+
+        return response()->json(['data' => $employeeData]);
     }
 
     /**
@@ -45,8 +50,8 @@ class EmployeeController extends Controller
         $employee->save();
 
         return response()->json([
-           'data' => $employee,
-           'message' => $employee->name . 'Has been created'
+            'data'    => $employee,
+            'message' => $employee->name . 'Has been created',
         ]);
     }
 
@@ -65,8 +70,8 @@ class EmployeeController extends Controller
         $employee->save();
 
         return response()->json([
-            'data' => $employee,
-            'message' => $employee->name . 'Has been updated'
+            'data'    => $employee,
+            'message' => $employee->name . 'Has been updated',
         ]);
     }
 
@@ -83,10 +88,9 @@ class EmployeeController extends Controller
         $employee->delete();
 
         return response()->json([
-            'message' => $employeeName . ' has been deleted'
+            'message' => $employeeName . ' has been deleted',
         ]);
     }
-
 
 
 }
