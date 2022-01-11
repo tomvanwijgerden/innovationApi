@@ -15,7 +15,7 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
-        $employees = Employee::with(['absenceCourses'])
+        $employees = Employee::with(['dossiers.absenceCourses'])
                              ->get();
 
         return response()->json(['data' => $employees]);
@@ -29,7 +29,7 @@ class EmployeeController extends Controller
      */
     public function show(Request $request, Employee $employee)
     {
-        $employeeData = Employee::with(['absenceCourses'])
+        $employeeData = Employee::with(['dossiers.absenceCourses'])
                                 ->where('employees.id', '=', $employee->id)
                                 ->get();
 
