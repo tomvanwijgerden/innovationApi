@@ -10,7 +10,6 @@ use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
-
     /**
      * @param Request $request
      *

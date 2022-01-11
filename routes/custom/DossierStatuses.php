@@ -9,6 +9,7 @@
 
 use App\Http\Controllers\AbsenceTypeController;
 
-Route::group(['prefix' => 'dossier-statuses', 'as' => 'dossier-statuses.'], function () {
-    Route::middleware('auth:sanctum')->get('/index', [AbsenceTypeController::class, 'index'])->name('index');
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::apiResource('dossier-statuses', 'AbsenceTypeController')
+         ->only('index');
 });

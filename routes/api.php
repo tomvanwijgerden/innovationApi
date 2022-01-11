@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')
+     ->get('/user', function (Request $request) {
+         return $request->user();
+     });
 
 Route::group(['as' => 'api.'], function () {
     foreach (File::Files(__DIR__ . '/custom') as $file) {
@@ -27,7 +28,9 @@ Route::group(['as' => 'api.'], function () {
 //sactum
 use App\Http\Controllers\AuthController;
 
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('/me', [AuthController::class, 'me']);
+});
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/me', [AuthController::class, 'me']);
-Route::post('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
