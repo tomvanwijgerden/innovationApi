@@ -62,7 +62,7 @@ class DossierController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(Request $request, Dossier $dossier)
+    public function destroy(Request $request, Dossier $dossier)
     {
         $dossier->delete();
         return response()->json(['message' => 'Dossier has been deleted']);

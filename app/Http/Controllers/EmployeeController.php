@@ -15,7 +15,7 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
-        $employees = Employee::with(['dossiers.absenceCourses'])
+        $employees = Employee::with(['dossiers.absenceCourses', 'employer'])
                              ->get();
 
         return response()->json(['data' => $employees]);
@@ -29,7 +29,7 @@ class EmployeeController extends Controller
      */
     public function show(Request $request, Employee $employee)
     {
-        $employeeData = Employee::with(['dossiers.absenceCourses'])
+        $employeeData = Employee::with(['dossiers.absenceCourses', 'employer'])
                                 ->where('employees.id', '=', $employee->id)
                                 ->get();
 
@@ -81,7 +81,7 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(Request $request, Employee $employee)
+    public function destroy(Request $request, Employee $employee)
     {
         $employeeName = $employee->name;
 

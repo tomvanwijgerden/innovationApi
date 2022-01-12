@@ -38,4 +38,14 @@ class Employee extends Model
         return $this->hasMany(Dossier::class);
     }
 
+    /**
+     * A employee belongs to a EmployerPerson.
+     *
+     * @return  \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function employer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Employer::class);
+    }
+
 }

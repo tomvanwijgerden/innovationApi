@@ -73,7 +73,7 @@ class EmployerController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(Request $request, Employer $employer)
+    public function destroy(Request $request, Employer $employer)
     {
         $employerName = $employer->name;
         $employer->delete();
