@@ -16,7 +16,7 @@ class DossierController extends Controller
      */
     public function index(Request $request)
     {
-        $dossiers = Dossier::all();
+        $dossiers = Dossier::with(['dossierStatus', 'employee'])->get();
 
         return response()->json([
             'data' => $dossiers,

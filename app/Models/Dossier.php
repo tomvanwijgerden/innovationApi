@@ -44,10 +44,20 @@ class Dossier extends Model
     /**
      * An absence course has an absence type.
      *
-     * @return  HasOne
+     * @return  BelongsTo
      */
     public function dossierStatus()
     {
-        return $this->hasOne(DossierStatuses::class);
+        return $this->belongsTo(DossierStatuses::class);
+    }
+
+    /**
+     * An absence course has an absence type.
+     *
+     * @return  BelongsTo
+     */
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
     }
 }
