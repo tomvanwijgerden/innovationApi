@@ -31,6 +31,7 @@ class DossierController extends Controller
      */
     public function show(Request $request, Dossier $dossier)
     {
+        $dossier['absence_courses'] = $dossier->absenceCourses;
         return response()->json([
             'data' => $dossier,
         ]);

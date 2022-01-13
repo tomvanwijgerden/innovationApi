@@ -38,6 +38,16 @@ class AbsenceCourse extends Model
      */
     public function absenceType()
     {
-        return $this->hasOne(AbsenceType::class);
+        return $this->hasOne(AbsenceType::class, 'id', 'type_id');
+    }
+
+    /**
+     * An absence course has an absence type.
+     *
+     * @return  HasOne
+     */
+    public function dossier()
+    {
+        return $this->hasOne(Dossier::class, 'id','dossier_id');
     }
 }

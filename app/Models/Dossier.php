@@ -38,7 +38,9 @@ class Dossier extends Model
      */
     public function absenceCourses()
     {
-        return $this->hasMany(AbsenceCourse::class);
+        return $this->hasMany(AbsenceCourse::class)
+            ->with(['absenceType'])
+            ->orderByDesc('start_at');
     }
 
     /**

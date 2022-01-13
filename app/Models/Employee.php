@@ -35,7 +35,7 @@ class Employee extends Model
      */
     public function dossiers(): HasMany
     {
-        return $this->hasMany(Dossier::class);
+        return $this->hasMany(Dossier::class)->with(['absenceCourses']);
     }
 
     /**

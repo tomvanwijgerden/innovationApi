@@ -26,7 +26,7 @@ class AbsenceCourseController extends Controller
     }
 
     /**
-     * @param Request       $request
+     * @param Request $request
      * @param AbsenceCourse $absenceCourse
      *
      * @return \Illuminate\Http\JsonResponse
@@ -48,14 +48,14 @@ class AbsenceCourseController extends Controller
         $absenceCourse = $this->dispatchNow(new storeAbsenceCourseJob($request));
 
         return response()->json([
-           'data' => $absenceCourse,
-           'message' => 'AbsenceCourse is added'
+            'data' => $absenceCourse,
+            'message' => 'AbsenceCourse is added'
         ]);
     }
 
 
     /**
-     * @param Request       $request
+     * @param Request $request
      * @param AbsenceCourse $absenceCourse
      *
      * @return \Illuminate\Http\JsonResponse
@@ -76,14 +76,19 @@ class AbsenceCourseController extends Controller
     }
 
     /**
-     * @param Request       $request
+     * @param Request $request
      * @param AbsenceCourse $absenceCourse
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(Request $request, AbsenceCourse $absenceCourse)
+    public function destroy(Request $request, AbsenceCourse $absenceCourse)
     {
+        $amountOfAbsenceLeft = $absenceCourse->dossier->absenceCourses->count();
         $absenceCourse->delete();
+
+        if ($amountOfAbsenceLeft == 1) {
+            $absenceCourse->dossier->delete();
+        }
         return response()->json(['message' => 'Absence course has been deleted']);
     }
 }

@@ -31,7 +31,7 @@ class EmployeeController extends Controller
     {
         $employeeData = Employee::with(['dossiers.absenceCourses', 'employer'])
                                 ->where('employees.id', '=', $employee->id)
-                                ->get();
+                                ->first();
 
         return response()->json(['data' => $employeeData]);
     }
@@ -89,6 +89,21 @@ class EmployeeController extends Controller
 
         return response()->json([
             'message' => $employeeName . ' has been deleted',
+        ]);
+    }
+
+    /**
+     * @param Request  $request
+     * @param Employee $employee
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function dossiers(Request $request, Employee $employee)
+    {
+       $dossiers =  $employee->dossiers;
+
+        return response()->json([
+           'data' => $dossiers,
         ]);
     }
 
