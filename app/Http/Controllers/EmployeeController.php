@@ -83,13 +83,20 @@ class EmployeeController extends Controller
      */
     public function destroy(Request $request, Employee $employee)
     {
+        $hasDossiers = $employee->dossiers()->count();
         $employeeName = $employee->name;
+        if($hasDossiers == 0){
+            $employee->delete();
 
-        $employee->delete();
+            return response()->json([
+                'message' => $employeeName . ' has been deleted',
+            ]);
+        }else{
+            return response()->json([
+                'message' => ' Cant delete ' . $employeeName . ' because of existing dossiers.'
+            ], 404);
+        }
 
-        return response()->json([
-            'message' => $employeeName . ' has been deleted',
-        ]);
     }
 
     /**

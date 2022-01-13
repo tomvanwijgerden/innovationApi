@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use App\Models\Employer;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class EmployerController extends Controller
     }
 
     /**
-     * @param Request  $request
+     * @param Request $request
      * @param Employer $employer
      *
      * @return \Illuminate\Http\JsonResponse
@@ -50,7 +51,7 @@ class EmployerController extends Controller
 
 
     /**
-     * @param Request  $request
+     * @param Request $request
      * @param Employer $employer
      *
      * @return \Illuminate\Http\JsonResponse
@@ -68,21 +69,28 @@ class EmployerController extends Controller
     }
 
     /**
-     * @param Request  $request
+     * @param Request $request
      * @param Employer $employer
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Request $request, Employer $employer)
     {
+        $employeeOnEmployer = Employee::where('employer_id', '=', $employer->id)->count();
         $employerName = $employer->name;
-        $employer->delete();
+        if ($employeeOnEmployer == 0) {
+            $employer->delete();
 
-        return response()->json([
-            'message' => $employerName . ' has been deleted'
-        ]);
+            return response()->json([
+                'message' => $employerName . ' has been deleted'
+            ]);
+        } else {
+            return response()->json([
+                'message' => ' Cant delete ' . $employerName . ' because of linked employees.'
+            ], 404);
+        }
+
     }
-
 
 
 }
