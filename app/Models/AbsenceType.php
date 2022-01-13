@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class AbsenceType extends Model
 {
+    const ILLNESS = 1;
+    const RECOVERED = 2;
 
     /**
      * The table name associated with the model.

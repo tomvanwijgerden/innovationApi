@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\AbsenceCourse;
+use App\Models\AbsenceType;
 use App\Models\Dossier;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -54,7 +55,7 @@ class StoreAbsenceCourseJob implements ShouldQueue
         $absenceCourse->start_at = Carbon::parse($request->input('start_at'));
         $absenceCourse->absence_percentage = $request->input('absence_percentage');
         $absenceCourse->dossier_id = $dossier->id;
-        $absenceCourse->type_id = $request->input('type_id');
+        $absenceCourse->type_id = $request->input('absence_percentage') < 100 ? AbsenceType::RECOVERED : AbsenceType::ILLNESS;
         $absenceCourse->save();
 
         if($absenceCourse->absence_percentage == 0){
