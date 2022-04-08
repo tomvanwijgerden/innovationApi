@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Dossier;
+use App\Observers\DossierObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Dossier::observe(DossierObserver::class);
     }
 }

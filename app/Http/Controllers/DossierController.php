@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\Dossiers\CreateRecentDossierJob;
+use App\Jobs\Dossiers\LastViewedDossiersJob;
 use App\Models\AbsenceCourse;
 use App\Models\Dossier;
 use Illuminate\Http\Request;
@@ -24,6 +26,20 @@ class DossierController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function lastViewedDossiers(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $dossiers = dispatch_sync(new LastViewedDossiersJob());
+
+        return response()->json([
+                'data' => $dossiers
+            ]);
+    }
+
+    /**
      * @param Request       $request
      * @param AbsenceCourse $absenceCourse
      *
@@ -31,6 +47,7 @@ class DossierController extends Controller
      */
     public function show(Request $request, Dossier $dossier)
     {
+        dispatch_sync(new CreateRecentDossierJob($dossier));
         $dossier['absence_courses'] = $dossier->absenceCourses;
         return response()->json([
             'data' => $dossier,

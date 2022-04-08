@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\storeAbsenceCourseJob;
+use App\Jobs\AbsenceCourses\storeAbsenceCourseJob;
 use App\Models\AbsenceCourse;
-use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
