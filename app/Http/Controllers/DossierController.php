@@ -33,7 +33,7 @@ class DossierController extends Controller
     public function lastViewedDossiers(Request $request): \Illuminate\Http\JsonResponse
     {
         $dossiers = dispatch_sync(new LastViewedDossiersJob());
-
+        ray($dossiers);
         return response()->json([
                 'data' => $dossiers
             ]);
